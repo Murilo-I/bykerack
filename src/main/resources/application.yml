@@ -1,0 +1,37 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /bykerack
+
+logging:
+  level:
+    org.springframework: ERROR
+    org.springframework.web: DEBUG
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:bykerack
+    username: sa
+    password: cptm
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+
+cptm:
+  jwt:
+    expiration: 900000
+  jwk:
+    jks-file: cptmtoken.jks
+    password:
+      key-store: ${JKS_STORE_PASS:cptmtokenstorepass}
+      key-pass: ${JKS_KEY_PASS:cptmtokenkeypass}
+    alias: cptmtoken
+  cors:
+    allowed-origin: localhost:9091
