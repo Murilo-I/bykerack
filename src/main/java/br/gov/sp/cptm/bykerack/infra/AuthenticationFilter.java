@@ -31,16 +31,30 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
         String token = getToken(request);
 
-        if (tokenService.isValidToken(token)) authenticate(token);
+        if (tokenService.isValidToken(token)) authenticate(request, token);
 
         filterChain.doFilter(request, response);
     }
 
-    private void authenticate(String token) {
-        repository.findById(tokenService.getSubject(token)).ifPresent(user -> {
-            var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        });
+    private void authenticate(HttpServletRequest request, String token) {
+        Long userIdOnToken = tokenService.getSubject(token);
+        Long userIdOnPath = extractUserIdFromPath(request.getRequestURI());
+
+        if (userIdOnPath == null || userIdOnPath.equals(userIdOnToken)) {
+            repository.findById(userIdOnToken).ifPresent(user -> {
+                var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            });
+        }
+    }
+
+    private Long extractUserIdFromPath(String path) {
+        try {
+            String[] paths = path.split("/");
+            return Long.parseLong(paths[paths.length - 1]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private String getToken(HttpServletRequest request) {
