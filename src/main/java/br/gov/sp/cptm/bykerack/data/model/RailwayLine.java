@@ -14,4 +14,7 @@ public class RailwayLine {
 
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "COLOR")
+    private String color;
 }
