@@ -15,13 +15,13 @@ public class BikeRack {
     @Column(name = "NAME")
     private String name;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "RAILWAY_LINE")
+    @ManyToOne
+    @JoinColumn(name = "RAILWAY_LINE")
     private RailwayLine railwayLine;
-
+ 
     @Column(name = "VACANCIES")
     private Integer vacancies;
 
     @Column(name = "STATION")
-    private Station station;
+    private String station;
 }
