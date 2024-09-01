@@ -46,6 +46,8 @@ public class SecurityConfig {
                 customizer.requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/doc-type").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/bikerack").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/railway-line").permitAll()
                         .anyRequest().authenticated());
 
         http.sessionManagement(customizer ->
@@ -60,6 +62,8 @@ public class SecurityConfig {
                 corsConfiguration.addAllowedMethod(HttpMethod.GET);
                 corsConfiguration.addAllowedMethod(HttpMethod.POST);
                 corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+                corsConfiguration.addAllowedHeader("Content-Type");
+                corsConfiguration.addAllowedHeader("Authorization");
                 return corsConfiguration;
             };
             customizer.configurationSource(configurationSource);
