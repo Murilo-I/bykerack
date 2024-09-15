@@ -1,17 +1,16 @@
 package br.gov.sp.cptm.bykerack.data.model;
 
-import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@Entity(name = "EXIT_REASON")
-public class ExitReason {
+public enum ExitReason {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EXIT_REASON_ID")
-    private Integer exitReasonId;
+    BIKE_RETRIEVAL("User retrieve their bike"),
+    BIKE_ABANDONMENT("Bike donated due to user abandonment");
 
-    @Column(name = "DESCRIPTION")
-    private String description;
+    @Getter
+    private final String description;
+
+    ExitReason(String description) {
+        this.description = description;
+    }
 }

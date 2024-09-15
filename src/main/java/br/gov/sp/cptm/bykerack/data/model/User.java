@@ -12,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Entity(name = "USERS")
+@Table(indexes = @Index(columnList = "document"))
 public class User implements UserDetails {
 
     public User() {
