@@ -1,7 +1,14 @@
 package br.gov.sp.cptm.bykerack.data.respository;
 
+import br.gov.sp.cptm.bykerack.data.model.BikeRack;
+import br.gov.sp.cptm.bykerack.data.model.User;
 import br.gov.sp.cptm.bykerack.data.model.Vacancy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VacancyRepository extends JpaRepository<Vacancy, Long> {
+import java.util.List;
+import java.util.Optional;
+
+public interface VacancyRepository extends JpaRepository<Vacancy, Vacancy.VacancyId> {
+
+    Optional<List<Vacancy>> findByVacancyIdBikeRackAndVacancyIdUser(BikeRack bikeRack, User user);
 }

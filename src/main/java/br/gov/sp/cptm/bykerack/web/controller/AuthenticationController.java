@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
     AuthenticationUseCase authUseCase;
+
+    @Autowired
+    public AuthenticationController(AuthenticationUseCase authUseCase) {
+        this.authUseCase = authUseCase;
+    }
 
     @PostMapping
     ResponseEntity<TokenDTO> authenticate(@RequestBody AccessDTO access) {

@@ -4,13 +4,12 @@ import br.gov.sp.cptm.bykerack.data.model.Access;
 import br.gov.sp.cptm.bykerack.data.model.Address;
 import br.gov.sp.cptm.bykerack.data.model.User;
 import br.gov.sp.cptm.bykerack.web.dto.UserDTO;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Mapper(componentModel = "spring")
-public interface UserMapper {
+@org.mapstruct.Mapper(componentModel = "spring")
+public interface Mapper {
 
     @Mapping(source = "document", target = "document")
     @Mapping(source = "birthDate", target = "birthDate")

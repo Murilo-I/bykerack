@@ -16,8 +16,12 @@ import java.util.List;
 @RequestMapping("/railway-line")
 public class RailwayLineController {
 
-    @Autowired
     RailwayLineRepository repository;
+
+    @Autowired
+    public RailwayLineController(RailwayLineRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping
     ResponseEntity<List<RailwayLine>> findAll() { return ResponseEntity.ok(repository.findAll());}

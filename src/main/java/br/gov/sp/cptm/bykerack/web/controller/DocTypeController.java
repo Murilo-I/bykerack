@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/doc-type")
 public class DocTypeController {
 
-    @Autowired
     DocumentTypeRepository repository;
+
+    @Autowired
+    public DocTypeController(DocumentTypeRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping
     ResponseEntity<List<DocumentType>> findAll() {

@@ -11,10 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationUseCase {
 
-    @Autowired
     AuthenticationManager authManager;
-    @Autowired
     TokenService tokenService;
+
+    @Autowired
+    public AuthenticationUseCase(AuthenticationManager authManager, TokenService tokenService) {
+        this.authManager = authManager;
+        this.tokenService = tokenService;
+    }
 
     public TokenDTO authenticate(AccessDTO access) {
         var usernamePasswordToken =
