@@ -25,10 +25,14 @@ public class SecurityConfig {
     private static final String[] IGNORING_MATCHERS = {"/**.html", "/v2/api-docs", "/webjars/**",
             "/configuration/**", "/swagger-resources/**", "/h2", "/h2/**"};
 
-    @Autowired
-    AuthenticationFilter authenticationFilter;
     @Value("${cptm.cors.allowed-origin}")
     String frontendOrigin;
+    AuthenticationFilter authenticationFilter;
+
+    @Autowired
+    public SecurityConfig(AuthenticationFilter authenticationFilter) {
+        this.authenticationFilter = authenticationFilter;
+    }
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {

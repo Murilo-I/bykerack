@@ -1,28 +1,31 @@
 package br.gov.sp.cptm.bykerack.data.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 @Entity(name = "VACANCY")
 public class Vacancy {
 
     @EmbeddedId
-    private final VacancyId vacancyId;
+    private VacancyId vacancyId;
 
     @Column(name = "DATE_ENTRY")
-    private final LocalDateTime dateEntry;
+    private LocalDateTime dateEntry;
 
     @Setter
     @Column(name = "DATE_EXIT")
     private LocalDateTime dateExit;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "EMPLOYEE")
-    private final User employee;
+    @ManyToOne
+    @JoinColumn(name = "EMPLOYEE")
+    private User employee;
 
     @Setter
     @Column(name = "EXIT_REASON")
@@ -37,19 +40,21 @@ public class Vacancy {
 
     @Getter
     @Embeddable
+    @EqualsAndHashCode
+    @NoArgsConstructor
     public static class VacancyId {
 
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "VACANCY_ID")
         private Long id;
 
-        @OneToOne
-        @PrimaryKeyJoinColumn(name = "BIKE_RACK")
-        private final BikeRack bikeRack;
+        @ManyToOne
+        @JoinColumn(name = "BIKE_RACK_ID")
+        private BikeRack bikeRack;
 
-        @OneToOne
-        @PrimaryKeyJoinColumn(name = "USER")
-        private final User user;
+        @ManyToOne
+        @JoinColumn(name = "USER_ID")
+        private User user;
 
         public VacancyId(User user, BikeRack bikeRack) {
             this.user = user;
