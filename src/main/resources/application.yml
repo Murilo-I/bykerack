@@ -33,4 +33,4 @@ cptm:
       key-pass: ${JKS_KEY_PASS:cptmtokenkeypass}
     alias: cptmtoken
   cors:
-    allowed-origin: localhost:9091
+    allowed-origins: http://localhost:9091, http://localhost:8081
