@@ -48,15 +48,15 @@ public class BikeRackService implements BikeRackUseCase {
     public VacancyResponse saveVacancy(BikeRackDTO request) {
         var bikeRack = bikeRackRepository.findById(request.getBikeRackId())
                 .orElseThrow(BikeRackNotFoundException::new);
+        var availableVacancies = bikeRack.getAvailableVacancies();
 
-        if (bikeRack.getAvailableVacancies().equals(0))
+        if (availableVacancies.equals(0))
             throw new NoVacanciesAvailableException();
 
         var employee = userRepository.findByDocument(request.getEmployeeDocument())
                 .orElseThrow(() -> new UserNotFoundException("Employee Not Found"));
         var user = userRepository.findByDocument(request.getUserDocument())
                 .orElseThrow(UserNotFoundException::new);
-
 
         var vacancies = vacancyRepository.findByVacancyIdBikeRackAndVacancyIdUser(bikeRack, user);
         setIsRetrieval(false);
@@ -66,6 +66,7 @@ public class BikeRackService implements BikeRackUseCase {
                 .findAny()).ifPresent(retrieval -> {
             retrieval.setDateExit(LocalDateTime.now());
             retrieval.setExitReason(ExitReason.BIKE_RETRIEVAL);
+            bikeRack.setAvailableVacancies(availableVacancies + 1);
             setIsRetrieval(true);
         });
 
@@ -74,6 +75,7 @@ public class BikeRackService implements BikeRackUseCase {
         if (vacancies.isEmpty() || !isRetrieval) {
             var vacancyId = new Vacancy.VacancyId(user, bikeRack);
             var newVacancy = new Vacancy(vacancyId, employee, LocalDateTime.now());
+            bikeRack.setAvailableVacancies(availableVacancies - 1);
             vacancyRepository.save(newVacancy);
             message = NEW_VACANCY;
         }
