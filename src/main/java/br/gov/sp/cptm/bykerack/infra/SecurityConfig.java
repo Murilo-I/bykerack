@@ -52,7 +52,7 @@ public class SecurityConfig {
                 customizer.requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/doc-type").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bikerack").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/vacancy").permitAll()
                         .requestMatchers(HttpMethod.GET, "/railway-line").permitAll()
                         .anyRequest().authenticated());
 

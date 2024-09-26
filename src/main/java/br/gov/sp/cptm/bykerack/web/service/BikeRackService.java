@@ -3,6 +3,7 @@ package br.gov.sp.cptm.bykerack.web.service;
 import br.gov.sp.cptm.bykerack.app.usecase.BikeRackUseCase;
 import br.gov.sp.cptm.bykerack.data.model.BikeRack;
 import br.gov.sp.cptm.bykerack.data.model.ExitReason;
+import br.gov.sp.cptm.bykerack.data.model.Role;
 import br.gov.sp.cptm.bykerack.data.model.Vacancy;
 import br.gov.sp.cptm.bykerack.data.respository.BikeRackRepository;
 import br.gov.sp.cptm.bykerack.data.respository.UserRepository;
@@ -53,9 +54,11 @@ public class BikeRackService implements BikeRackUseCase {
         if (availableVacancies.equals(0))
             throw new NoVacanciesAvailableException();
 
-        var employee = userRepository.findByDocument(request.getEmployeeDocument())
+        var employee = userRepository.findByDocumentAndRole(request.getEmployeeDocument(),
+                        Role.EMPLOYEE)
                 .orElseThrow(() -> new UserNotFoundException("Employee Not Found"));
-        var user = userRepository.findByDocument(request.getUserDocument())
+        var user = userRepository.findByDocumentAndRole(request.getUserDocument(),
+                        Role.USER)
                 .orElseThrow(UserNotFoundException::new);
 
         var vacancies = vacancyRepository.findByVacancyIdBikeRackAndVacancyIdUser(bikeRack, user);
@@ -72,7 +75,7 @@ public class BikeRackService implements BikeRackUseCase {
 
         var message = RETRIEVED;
 
-        if (vacancies.isEmpty() || !isRetrieval) {
+        if (vacancies.isEmpty() || Boolean.FALSE.equals(isRetrieval)) {
             var vacancyId = new Vacancy.VacancyId(user, bikeRack);
             var newVacancy = new Vacancy(vacancyId, employee, LocalDateTime.now());
             bikeRack.setAvailableVacancies(availableVacancies - 1);

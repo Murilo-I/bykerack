@@ -24,7 +24,7 @@ public class Vacancy {
     private LocalDateTime dateExit;
 
     @ManyToOne
-    @JoinColumn(name = "EMPLOYEE")
+    @JoinColumn(name = "EMPLOYEE_ID")
     private User employee;
 
     @Setter
