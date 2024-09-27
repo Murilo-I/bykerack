@@ -19,7 +19,6 @@ spring:
     password: cptm
     driverClassName: org.h2.Driver
   jpa:
-    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
 
