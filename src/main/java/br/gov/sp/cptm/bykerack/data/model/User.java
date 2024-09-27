@@ -29,8 +29,8 @@ public class User implements UserDetails {
     private String name;
 
     @Setter
-    @OneToOne
-    @PrimaryKeyJoinColumn(name = "DOCUMENT_TYPE")
+    @ManyToOne
+    @JoinColumn(name = "DOCUMENT_TYPE_ID")
     private DocumentType documentType;
 
     @Setter
@@ -43,16 +43,17 @@ public class User implements UserDetails {
 
     @Setter
     @Column(name = "ROLE", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Setter
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "ACCESS")
+    @JoinColumn(name = "ACCESS_ID")
     private Access access;
 
     @Setter
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "ADDRESS")
+    @JoinColumn(name = "ADDRESS_ID")
     private Address address;
 
     @Override

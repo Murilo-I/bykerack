@@ -1,5 +1,6 @@
 package br.gov.sp.cptm.bykerack.data.respository;
 
+import br.gov.sp.cptm.bykerack.data.model.Role;
 import br.gov.sp.cptm.bykerack.data.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -9,5 +10,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByAccess_Email(String email);
 
-    Optional<User> findByDocument(String document);
+    Optional<User> findByDocumentAndRole(String document, Role role);
 }

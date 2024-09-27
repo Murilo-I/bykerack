@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -25,10 +27,14 @@ public class SecurityConfig {
     private static final String[] IGNORING_MATCHERS = {"/**.html", "/v2/api-docs", "/webjars/**",
             "/configuration/**", "/swagger-resources/**", "/h2", "/h2/**"};
 
-    @Autowired
+    @Value("${cptm.cors.allowed-origins}")
+    List<String> allowedOrigins;
     AuthenticationFilter authenticationFilter;
-    @Value("${cptm.cors.allowed-origin}")
-    String frontendOrigin;
+
+    @Autowired
+    public SecurityConfig(AuthenticationFilter authenticationFilter) {
+        this.authenticationFilter = authenticationFilter;
+    }
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
@@ -46,7 +52,7 @@ public class SecurityConfig {
                 customizer.requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/doc-type").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/bikerack").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/vacancy").permitAll()
                         .requestMatchers(HttpMethod.GET, "/railway-line").permitAll()
                         .anyRequest().authenticated());
 
@@ -58,7 +64,7 @@ public class SecurityConfig {
         http.cors(customizer -> {
             CorsConfigurationSource configurationSource = request -> {
                 var corsConfiguration = new CorsConfiguration();
-                corsConfiguration.addAllowedOrigin(frontendOrigin);
+                corsConfiguration.setAllowedOrigins(allowedOrigins);
                 corsConfiguration.addAllowedMethod(HttpMethod.GET);
                 corsConfiguration.addAllowedMethod(HttpMethod.POST);
                 corsConfiguration.addAllowedMethod(HttpMethod.PATCH);

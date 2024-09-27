@@ -20,10 +20,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION = "Authorization";
 
-    @Autowired
     TokenService tokenService;
-    @Autowired
     UserRepository repository;
+
+    @Autowired
+    public AuthenticationFilter(TokenService tokenService, UserRepository repository) {
+        this.tokenService = tokenService;
+        this.repository = repository;
+    }
 
     @Override
     @SuppressWarnings("NullableProblems")

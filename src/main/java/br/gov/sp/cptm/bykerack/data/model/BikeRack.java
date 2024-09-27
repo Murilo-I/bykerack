@@ -16,7 +16,7 @@ public class BikeRack {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "RAILWAY_LINE")
+    @JoinColumn(name = "RAILWAY_LINE_ID")
     private RailwayLine railwayLine;
  
     @Column(name = "VACANCIES")
@@ -24,7 +24,4 @@ public class BikeRack {
 
     @Column(name = "AVAILABLE_VACANCIES")
     private Integer availableVacancies;
-
-    @Column(name = "STATION")
-    private String station;
 }

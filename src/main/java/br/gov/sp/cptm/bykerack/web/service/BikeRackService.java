@@ -3,6 +3,7 @@ package br.gov.sp.cptm.bykerack.web.service;
 import br.gov.sp.cptm.bykerack.app.usecase.BikeRackUseCase;
 import br.gov.sp.cptm.bykerack.data.model.BikeRack;
 import br.gov.sp.cptm.bykerack.data.model.ExitReason;
+import br.gov.sp.cptm.bykerack.data.model.Role;
 import br.gov.sp.cptm.bykerack.data.model.Vacancy;
 import br.gov.sp.cptm.bykerack.data.respository.BikeRackRepository;
 import br.gov.sp.cptm.bykerack.data.respository.UserRepository;
@@ -48,32 +49,36 @@ public class BikeRackService implements BikeRackUseCase {
     public VacancyResponse saveVacancy(BikeRackDTO request) {
         var bikeRack = bikeRackRepository.findById(request.getBikeRackId())
                 .orElseThrow(BikeRackNotFoundException::new);
+        var availableVacancies = bikeRack.getAvailableVacancies();
 
-        if (bikeRack.getAvailableVacancies().equals(0))
+        if (availableVacancies.equals(0))
             throw new NoVacanciesAvailableException();
 
-        var employee = userRepository.findByDocument(request.getEmployeeDocument())
+        var employee = userRepository.findByDocumentAndRole(request.getEmployeeDocument(),
+                        Role.EMPLOYEE)
                 .orElseThrow(() -> new UserNotFoundException("Employee Not Found"));
-        var user = userRepository.findByDocument(request.getUserDocument())
+        var user = userRepository.findByDocumentAndRole(request.getUserDocument(),
+                        Role.USER)
                 .orElseThrow(UserNotFoundException::new);
-
 
         var vacancies = vacancyRepository.findByVacancyIdBikeRackAndVacancyIdUser(bikeRack, user);
         setIsRetrieval(false);
 
         vacancies.flatMap(vacancyList -> vacancyList.stream()
-                .filter(vacancy -> Objects.isNull(vacancy.getDateExit()))
+                .filter(vacancy -> Objects.isNull(vacancy.getExitDate()))
                 .findAny()).ifPresent(retrieval -> {
-            retrieval.setDateExit(LocalDateTime.now());
+            retrieval.setExitDate(LocalDateTime.now());
             retrieval.setExitReason(ExitReason.BIKE_RETRIEVAL);
+            bikeRack.setAvailableVacancies(availableVacancies + 1);
             setIsRetrieval(true);
         });
 
         var message = RETRIEVED;
 
-        if (vacancies.isEmpty() || !isRetrieval) {
-            var vacancyId = new Vacancy.VacancyId(user, bikeRack);
-            var newVacancy = new Vacancy(vacancyId, employee, LocalDateTime.now());
+        if (vacancies.isEmpty() || Boolean.FALSE.equals(isRetrieval)) {
+            var vacancyId = new Vacancy.VacancyId(LocalDateTime.now(), user, bikeRack);
+            var newVacancy = new Vacancy(vacancyId, employee);
+            bikeRack.setAvailableVacancies(availableVacancies - 1);
             vacancyRepository.save(newVacancy);
             message = NEW_VACANCY;
         }

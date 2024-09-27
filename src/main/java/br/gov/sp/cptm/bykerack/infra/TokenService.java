@@ -20,8 +20,12 @@ public class TokenService {
 
     @Value("${cptm.jwt.expiration}")
     String expiration;
-    @Autowired
     KeyStore.PrivateKeyEntry keyEntry;
+
+    @Autowired
+    public TokenService(KeyStore.PrivateKeyEntry keyEntry) {
+        this.keyEntry = keyEntry;
+    }
 
     public TokenDTO generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
