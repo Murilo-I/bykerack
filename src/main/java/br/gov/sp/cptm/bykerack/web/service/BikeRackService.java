@@ -65,9 +65,9 @@ public class BikeRackService implements BikeRackUseCase {
         setIsRetrieval(false);
 
         vacancies.flatMap(vacancyList -> vacancyList.stream()
-                .filter(vacancy -> Objects.isNull(vacancy.getDateExit()))
+                .filter(vacancy -> Objects.isNull(vacancy.getExitDate()))
                 .findAny()).ifPresent(retrieval -> {
-            retrieval.setDateExit(LocalDateTime.now());
+            retrieval.setExitDate(LocalDateTime.now());
             retrieval.setExitReason(ExitReason.BIKE_RETRIEVAL);
             bikeRack.setAvailableVacancies(availableVacancies + 1);
             setIsRetrieval(true);
@@ -76,8 +76,8 @@ public class BikeRackService implements BikeRackUseCase {
         var message = RETRIEVED;
 
         if (vacancies.isEmpty() || Boolean.FALSE.equals(isRetrieval)) {
-            var vacancyId = new Vacancy.VacancyId(user, bikeRack);
-            var newVacancy = new Vacancy(vacancyId, employee, LocalDateTime.now());
+            var vacancyId = new Vacancy.VacancyId(LocalDateTime.now(), user, bikeRack);
+            var newVacancy = new Vacancy(vacancyId, employee);
             bikeRack.setAvailableVacancies(availableVacancies - 1);
             vacancyRepository.save(newVacancy);
             message = NEW_VACANCY;

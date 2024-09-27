@@ -7,10 +7,7 @@ import br.gov.sp.cptm.bykerack.web.dto.VacancyResponse;
 import br.gov.sp.cptm.bykerack.web.service.BikeRackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class BikeRackController {
     }
 
     @PostMapping
-    ResponseEntity<VacancyResponse> saveVacancy(BikeRackDTO request) {
+    ResponseEntity<VacancyResponse> saveVacancy(@RequestBody BikeRackDTO request) {
         return ResponseEntity.ok(useCase.saveVacancy(request));
     }
 

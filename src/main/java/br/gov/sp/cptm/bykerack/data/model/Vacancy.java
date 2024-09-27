@@ -16,12 +16,9 @@ public class Vacancy {
     @EmbeddedId
     private VacancyId vacancyId;
 
-    @Column(name = "DATE_ENTRY")
-    private LocalDateTime dateEntry;
-
     @Setter
-    @Column(name = "DATE_EXIT")
-    private LocalDateTime dateExit;
+    @Column(name = "EXIT_DATE")
+    private LocalDateTime exitDate;
 
     @ManyToOne
     @JoinColumn(name = "EMPLOYEE_ID")
@@ -32,10 +29,9 @@ public class Vacancy {
     @Enumerated(EnumType.STRING)
     private ExitReason exitReason;
 
-    public Vacancy(VacancyId vacancyId, User employee, LocalDateTime dateEntry) {
+    public Vacancy(VacancyId vacancyId, User employee) {
         this.vacancyId = vacancyId;
         this.employee = employee;
-        this.dateEntry = dateEntry;
     }
 
     @Getter
@@ -44,9 +40,8 @@ public class Vacancy {
     @NoArgsConstructor
     public static class VacancyId {
 
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "VACANCY_ID")
-        private Long id;
+        @Column(name = "ENTRY_DATE")
+        private LocalDateTime entryDate;
 
         @ManyToOne
         @JoinColumn(name = "BIKE_RACK_ID")
@@ -56,7 +51,8 @@ public class Vacancy {
         @JoinColumn(name = "USER_ID")
         private User user;
 
-        public VacancyId(User user, BikeRack bikeRack) {
+        public VacancyId(LocalDateTime entryDate, User user, BikeRack bikeRack) {
+            this.entryDate = entryDate;
             this.user = user;
             this.bikeRack = bikeRack;
         }

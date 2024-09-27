@@ -24,7 +24,4 @@ public class BikeRack {
 
     @Column(name = "AVAILABLE_VACANCIES")
     private Integer availableVacancies;
-
-    @Column(name = "STATION")
-    private String station;
 }
