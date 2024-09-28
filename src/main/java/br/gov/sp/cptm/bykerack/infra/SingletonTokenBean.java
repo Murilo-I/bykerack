@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -39,7 +40,7 @@ public class SingletonTokenBean {
     }
 
     private KeyStore getKeyStore() {
-        try (var jksInputStream = this.getClass().getClassLoader().getResourceAsStream(jksFile)) {
+        try (var jksInputStream = new FileInputStream(jksFile)) {
             var keyStore = KeyStore.getInstance(PKCS_12);
             keyStore.load(jksInputStream, keyStorePass.toCharArray());
             return keyStore;
