@@ -13,6 +13,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     url: ${AZURE_MYSQL_CONNECTIONSTRING}
   jpa:
+    show-sql: true
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
@@ -22,7 +23,7 @@ cptm:
   jwt:
     expiration: 900000
   jwk:
-    jks-file: cptmtoken.jks
+    jks-file: /home/cptmtoken.jks
     password:
       key-store: ${JKS_STORE_PASS}
       key-pass: ${JKS_KEY_PASS}
