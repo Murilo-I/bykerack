@@ -127,7 +127,7 @@
                     <region>Brazil South</region>
                     <runtime>
                         <os>Linux</os>
-                        <webContainer>Tomcat 10.1</webContainer>
+                        <webContainer>Java SE</webContainer>
                         <javaVersion>Java 17</javaVersion>
                     </runtime>
                     <appSettings>
