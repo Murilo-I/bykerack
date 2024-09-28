@@ -124,10 +124,10 @@
                     <resourceGroup>bikerack-cptm</resourceGroup>
                     <appName>bikerack-api</appName>
                     <pricingTier>B1</pricingTier>
-                    <region>Brazil South </region>
+                    <region>Brazil South</region>
                     <runtime>
                         <os>Linux</os>
-                        <webContainer>Apache Tomcat</webContainer>
+                        <webContainer>Tomcat 10.1</webContainer>
                         <javaVersion>Java 17</javaVersion>
                     </runtime>
                     <appSettings>
