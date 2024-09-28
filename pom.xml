@@ -115,6 +115,40 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <subscriptionId>b6e633a1-452d-4ffe-a40d-1d80996fb084</subscriptionId>
+                    <resourceGroup>bikerack-cptm</resourceGroup>
+                    <appName>bikerack-api</appName>
+                    <pricingTier>B1</pricingTier>
+                    <region>Brazil South </region>
+                    <runtime>
+                        <os>Linux</os>
+                        <webContainer>Apache Tomcat</webContainer>
+                        <javaVersion>Java 17</javaVersion>
+                    </runtime>
+                    <appSettings>
+                        <property>
+                            <name>JAVA_OPTS</name>
+                            <value>-Dserver.port=9090  -Dspring.profiles.active=dev</value>
+                        </property>
+                    </appSettings>
+                    <deployment>
+                        <resources>
+                            <resource>
+                                <type>jar</type>
+                                <directory>${project.basedir}/target</directory>
+                                <includes>
+                                    <include>*.jar</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                    </deployment>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
