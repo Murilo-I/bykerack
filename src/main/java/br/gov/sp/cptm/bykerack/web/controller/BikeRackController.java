@@ -2,7 +2,8 @@ package br.gov.sp.cptm.bykerack.web.controller;
 
 import br.gov.sp.cptm.bykerack.app.usecase.BikeRackUseCase;
 import br.gov.sp.cptm.bykerack.data.model.BikeRack;
-import br.gov.sp.cptm.bykerack.web.dto.BikeRackDTO;
+import br.gov.sp.cptm.bykerack.web.dto.BikeRackRequest;
+import br.gov.sp.cptm.bykerack.web.dto.VacancyInfo;
 import br.gov.sp.cptm.bykerack.web.dto.VacancyResponse;
 import br.gov.sp.cptm.bykerack.web.service.BikeRackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,17 @@ public class BikeRackController {
     }
 
     @PostMapping
-    ResponseEntity<VacancyResponse> saveVacancy(@RequestBody BikeRackDTO request) {
+    ResponseEntity<VacancyResponse> saveVacancy(@RequestBody BikeRackRequest request) {
         return ResponseEntity.ok(useCase.saveVacancy(request));
     }
 
     @GetMapping
     ResponseEntity<List<BikeRack>> findAll() {
         return ResponseEntity.ok(useCase.findAll());
+    }
+
+    @GetMapping("{userId}")
+    ResponseEntity<VacancyInfo> getVacancyInfo(@PathVariable Long userId) {
+        return ResponseEntity.ok(useCase.getVacancyInfo(userId));
     }
 }

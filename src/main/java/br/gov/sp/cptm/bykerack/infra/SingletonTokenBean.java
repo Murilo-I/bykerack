@@ -5,6 +5,7 @@ import br.gov.sp.cptm.bykerack.util.exception.RetrievePrivateKeyEntryException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,11 +14,13 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 
 @Configuration
 public class SingletonTokenBean {
 
     private static final String PKCS_12 = "pkcs12";
+    private static final String PROD = "prod";
 
     @Value("${cptm.jwk.jks-file}")
     String jksFile;
@@ -27,6 +30,12 @@ public class SingletonTokenBean {
     String keyPass;
     @Value("${cptm.jwk.alias}")
     String alias;
+
+    final Environment environment;
+
+    public SingletonTokenBean(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public KeyStore.PrivateKeyEntry getPrivateKeyEntry() {
@@ -40,12 +49,21 @@ public class SingletonTokenBean {
     }
 
     private KeyStore getKeyStore() {
-        try (var jksInputStream = new FileInputStream(jksFile)) {
+        try (
+                var jksInputStream = isProfileProd()
+                        ? new FileInputStream(jksFile)
+                        : this.getClass().getClassLoader().getResourceAsStream(jksFile)
+        ) {
             var keyStore = KeyStore.getInstance(PKCS_12);
             keyStore.load(jksInputStream, keyStorePass.toCharArray());
             return keyStore;
         } catch (IOException | KeyStoreException | NoSuchAlgorithmException | CertificateException e) {
             throw new LoadKeyStoreException(e);
         }
+    }
+
+    private boolean isProfileProd() {
+        var activeProfiles = Arrays.stream(environment.getActiveProfiles()).toList();
+        return activeProfiles.contains(PROD);
     }
 }

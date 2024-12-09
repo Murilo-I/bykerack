@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface VacancyRepository extends JpaRepository<Vacancy, Vacancy.VacancyId> {
 
     Optional<List<Vacancy>> findByVacancyIdBikeRackAndVacancyIdUser(BikeRack bikeRack, User user);
+
+    Optional<Vacancy> findByVacancyIdUserAndExitDateIsNull(User user);
 }
