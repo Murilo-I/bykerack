@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>br.com.cptm</groupId>
-    <artifactId>BykeRack</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>BykeRack</name>
+    <artifactId>BikeRack</artifactId>
+    <version>0.1.0</version>
+    <name>BikeRack</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>17</java.version>
@@ -35,6 +35,12 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
 
         <dependency>
@@ -107,6 +113,40 @@
                             <version>1.18.30</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>2.11.0</version>
+                <configuration>
+                    <subscriptionId>b6e633a1-452d-4ffe-a40d-1d80996fb084</subscriptionId>
+                    <resourceGroup>bikerack-cptm</resourceGroup>
+                    <appName>bikerack-api</appName>
+                    <pricingTier>B1</pricingTier>
+                    <region>Brazil South</region>
+                    <runtime>
+                        <os>Linux</os>
+                        <webContainer>Java SE</webContainer>
+                        <javaVersion>Java 17</javaVersion>
+                    </runtime>
+                    <appSettings>
+                        <property>
+                            <name>JAVA_OPTS</name>
+                            <value>--spring.profiles.active=prod</value>
+                        </property>
+                    </appSettings>
+                    <deployment>
+                        <resources>
+                            <resource>
+                                <type>jar</type>
+                                <directory>${project.basedir}/target</directory>
+                                <includes>
+                                    <include>*.jar</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                    </deployment>
                 </configuration>
             </plugin>
         </plugins>

@@ -29,8 +29,8 @@ cptm:
   jwk:
     jks-file: cptmtoken.jks
     password:
-      key-store: ${JKS_STORE_PASS:cptmtokenstorepass}
-      key-pass: ${JKS_KEY_PASS:cptmtokenkeypass}
+      key-store: ${JKS_STORE_PASS}
+      key-pass: ${JKS_KEY_PASS}
     alias: cptmtoken
   cors:
     allowed-origins: http://localhost:9091, http://localhost:8081
