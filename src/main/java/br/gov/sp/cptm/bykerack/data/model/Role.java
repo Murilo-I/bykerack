@@ -5,7 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Role implements GrantedAuthority {
 
     USER("ROLE_USER"),
-    EMPLOYEE("ROLE_EMPLOYEE");
+    EMPLOYEE("ROLE_EMPLOYEE"),
+    QR_READER("QR_READER_ROLE");
 
     private final String roleName;
 

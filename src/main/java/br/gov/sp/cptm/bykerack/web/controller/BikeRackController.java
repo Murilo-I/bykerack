@@ -8,6 +8,7 @@ import br.gov.sp.cptm.bykerack.web.dto.VacancyResponse;
 import br.gov.sp.cptm.bykerack.web.service.BikeRackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class BikeRackController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'QR_READER')")
     ResponseEntity<VacancyResponse> saveVacancy(@RequestBody BikeRackRequest request) {
         return ResponseEntity.ok(useCase.saveVacancy(request));
     }
