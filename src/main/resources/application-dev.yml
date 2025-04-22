@@ -19,9 +19,11 @@ spring:
     password: cptm
     driverClassName: org.h2.Driver
   jpa:
+    show-sql: true
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
+    generate-ddl: true
 
 cptm:
   jwt:

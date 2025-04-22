@@ -2,7 +2,9 @@ package br.gov.sp.cptm.bykerack.util.mapper;
 
 import br.gov.sp.cptm.bykerack.data.model.Access;
 import br.gov.sp.cptm.bykerack.data.model.Address;
+import br.gov.sp.cptm.bykerack.data.model.Bicycle;
 import br.gov.sp.cptm.bykerack.data.model.User;
+import br.gov.sp.cptm.bykerack.web.dto.BicycleDTO;
 import br.gov.sp.cptm.bykerack.web.dto.UserDTO;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -41,6 +43,8 @@ public interface Mapper {
     @Mapping(source = "address.postalCode", target = "addressDTO.postalCode")
     @Mapping(source = "address.complement", target = "addressDTO.complement")
     UserDTO toDTO(User user);
+
+    BicycleDTO mapBike(Bicycle bicycle);
 
     @Named("passwordEncoder")
     static String passwordEncoder(String grossPassword) {

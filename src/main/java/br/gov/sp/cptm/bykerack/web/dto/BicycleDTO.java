@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class BicycleDTO {
 
+    private Long bicycleId;
     private String model;
     private String color;
     private String chassis;

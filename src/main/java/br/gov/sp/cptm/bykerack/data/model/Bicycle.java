@@ -17,19 +17,19 @@ public class Bicycle {
     private Long bicycleId;
 
     @Setter
-    @Column(name = "MODEL")
+    @Column(name = "MODEL", nullable = false)
     private String model;
 
     @Setter
-    @Column(name = "COLOR")
+    @Column(name = "COLOR", nullable = false)
     private String color;
 
     @Setter
-    @Column(name = "CHASSIS")
+    @Column(name = "CHASSIS", nullable = false)
     private String chassis;
 
     @Setter
-    @Column(name = "YEAR")
+    @Column(name = "BIKE_YEAR", nullable = false)
     private Integer year;
 
     @Setter

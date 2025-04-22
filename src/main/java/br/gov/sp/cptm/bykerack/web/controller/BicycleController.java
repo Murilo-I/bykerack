@@ -26,15 +26,13 @@ public class BicycleController {
     }
 
     @PostMapping
-    ResponseEntity<Void> save(@PathVariable Long userId, @RequestBody BicycleDTO request) {
-        useCase.save(request, userId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    ResponseEntity<BicycleDTO> save(@PathVariable Long userId, @RequestBody BicycleDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(useCase.save(request, userId));
     }
 
     @PatchMapping("{bikeId}")
-    ResponseEntity<Void> update(@PathVariable Long userId, @PathVariable Long bikeId, @RequestBody BicycleDTO request) {
-        useCase.update(request, userId, bikeId);
-        return ResponseEntity.ok().build();
+    ResponseEntity<BicycleDTO> update(@PathVariable Long userId, @PathVariable Long bikeId, @RequestBody BicycleDTO request) {
+        return ResponseEntity.ok(useCase.update(request, userId, bikeId));
     }
 
     @DeleteMapping("{bikeId}")

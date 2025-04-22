@@ -8,9 +8,9 @@ public interface BicycleUseCase {
 
     List<BicycleDTO> findAll(Long userId);
 
-    void save(BicycleDTO bicycleDto, Long userId);
+    BicycleDTO save(BicycleDTO bicycleDto, Long userId);
 
-    void update(BicycleDTO bicycleDto, Long userId, Long bikeId);
+    BicycleDTO update(BicycleDTO bicycleDto, Long userId, Long bikeId);
 
     void delete(Long userId, Long bikeId);
 }
