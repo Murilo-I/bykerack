@@ -3,9 +3,11 @@ package br.gov.sp.cptm.bykerack.data.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @Entity(name = "DOCUMENT_TYPE")
-public class DocumentType {
+public class DocumentType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
