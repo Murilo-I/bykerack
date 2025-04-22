@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static br.gov.sp.cptm.bykerack.infra.TokenService.BEARER;
 
@@ -19,6 +20,7 @@ import static br.gov.sp.cptm.bykerack.infra.TokenService.BEARER;
 public class AuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION = "Authorization";
+    private static final String BICYCLE = "bicycle";
 
     TokenService tokenService;
     UserRepository repository;
@@ -56,6 +58,14 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     private Long extractUserIdFromPath(String path) {
         try {
             String[] paths = path.split("/");
+
+            int pathPosition = Arrays.stream(paths).filter(uri -> uri.equals(BICYCLE))
+                    .map(uri -> getUriPosition(uri, paths))
+                    .findAny().orElse(-1);
+
+            if (pathPosition > 0)
+                return Long.parseLong(paths[pathPosition - 1]);
+
             return Long.parseLong(paths[paths.length - 1]);
         } catch (NumberFormatException e) {
             return null;
@@ -69,5 +79,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             return null;
 
         return token.substring(7);
+    }
+
+    public static int getUriPosition(String uri, String[] paths) {
+        for (int i = 0; i < paths.length; i++) {
+            if (uri.equals(paths[i])) return i;
+        }
+        return -1;
     }
 }

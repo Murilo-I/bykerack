@@ -1,8 +1,10 @@
 package br.gov.sp.cptm.bykerack.web.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class AccessDTO {
 
     private String email;

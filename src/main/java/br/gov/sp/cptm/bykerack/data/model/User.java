@@ -1,6 +1,7 @@
 package br.gov.sp.cptm.bykerack.data.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
+@EqualsAndHashCode
 @Entity(name = "USERS")
 @Table(indexes = @Index(columnList = "document"))
 public class User implements UserDetails {

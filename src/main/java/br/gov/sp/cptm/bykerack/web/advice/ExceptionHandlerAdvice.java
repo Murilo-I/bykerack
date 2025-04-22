@@ -13,9 +13,11 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler({
             UserNotFoundException.class,
             DocTypeNotFoundException.class,
+            BicycleNotFoundException.class,
             BikeRackNotFoundException.class,
+            BikeNotBelongToUserException.class,
             NoVacanciesAvailableException.class,
-            EMailAlreadyRegisteredException.class
+            EMailAlreadyRegisteredException.class,
     })
     public ResponseEntity<ErrorMessage> handleClientException(RuntimeException exception) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
