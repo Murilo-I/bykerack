@@ -6,8 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Entity(name = "ACCESS")
-public class Access implements Serializable {
+@Entity(name = "USER_ACCESS")
+public class UserAccess implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

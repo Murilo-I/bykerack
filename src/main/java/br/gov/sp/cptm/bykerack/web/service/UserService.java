@@ -2,9 +2,9 @@ package br.gov.sp.cptm.bykerack.web.service;
 
 import br.gov.sp.cptm.bykerack.app.usecase.AddressUseCase;
 import br.gov.sp.cptm.bykerack.app.usecase.UserUseCase;
-import br.gov.sp.cptm.bykerack.data.model.Access;
+import br.gov.sp.cptm.bykerack.data.model.UserAccess;
 import br.gov.sp.cptm.bykerack.data.model.User;
-import br.gov.sp.cptm.bykerack.data.respository.AccessRepository;
+import br.gov.sp.cptm.bykerack.data.respository.UserAccessRepository;
 import br.gov.sp.cptm.bykerack.data.respository.DocumentTypeRepository;
 import br.gov.sp.cptm.bykerack.data.respository.UserRepository;
 import br.gov.sp.cptm.bykerack.util.exception.DocTypeNotFoundException;
@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService implements UserUseCase {
 
     UserRepository userRepository;
-    AccessRepository accessRepository;
+    UserAccessRepository accessRepository;
     AddressUseCase addressUseCase;
     DocumentTypeRepository docTypeRepository;
     Mapper mapper;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       AccessRepository accessRepository,
+                       UserAccessRepository accessRepository,
                        AddressUseCase addressUseCase,
                        DocumentTypeRepository docTypeRepository,
                        Mapper mapper) {
@@ -64,8 +64,8 @@ public class UserService implements UserUseCase {
     @Transactional
     public UserDTO update(UserDTO request, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Access mappedAccess = mapper.mapAccess(request);
-        Access access = user.getAccess();
+        UserAccess mappedAccess = mapper.mapAccess(request);
+        UserAccess access = user.getAccess();
         access.setEmail(mappedAccess.getEmail());
         access.setPassword(mappedAccess.getPassword());
         user.setAddress(addressUseCase.updateAddress(user, request));
