@@ -1,6 +1,6 @@
 package br.gov.sp.cptm.bykerack.util.mapper;
 
-import br.gov.sp.cptm.bykerack.data.model.Access;
+import br.gov.sp.cptm.bykerack.data.model.UserAccess;
 import br.gov.sp.cptm.bykerack.data.model.Address;
 import br.gov.sp.cptm.bykerack.data.model.Bicycle;
 import br.gov.sp.cptm.bykerack.data.model.User;
@@ -19,7 +19,7 @@ public interface Mapper {
 
     @Mapping(source = "email", target = "email")
     @Mapping(source = "password", target = "password", qualifiedByName = "passwordEncoder")
-    Access mapAccess(UserDTO request);
+    UserAccess mapAccess(UserDTO request);
 
     @Mapping(source = "addressDTO.address", target = "address")
     @Mapping(source = "addressDTO.number", target = "number")

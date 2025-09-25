@@ -51,7 +51,7 @@ public class User implements UserDetails {
     @Setter
     @OneToOne
     @JoinColumn(name = "ACCESS_ID")
-    private Access access;
+    private UserAccess access;
 
     @Setter
     @OneToOne

@@ -70,6 +70,7 @@ public class SecurityConfig {
                 corsConfiguration.addAllowedMethod(HttpMethod.GET);
                 corsConfiguration.addAllowedMethod(HttpMethod.POST);
                 corsConfiguration.addAllowedMethod(HttpMethod.PATCH);
+                corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
                 corsConfiguration.addAllowedHeader("Content-Type");
                 corsConfiguration.addAllowedHeader("Authorization");
                 return corsConfiguration;

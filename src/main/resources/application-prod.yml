@@ -7,6 +7,8 @@ spring:
   datasource:
     driverClassName: oracle.jdbc.OracleDriver
     url: ${ORACLE_CONNECTION_STRING}
+    username: ${ORACLE_USER}
+    password: ${ORACLE_PASSWORD}
   jpa:
     show-sql: true
     defer-datasource-initialization: true
@@ -18,7 +20,7 @@ cptm:
   jwt:
     expiration: 900000
   jwk:
-    jks-file: /home/cptmtoken.jks
+    jks-file: ${JKS_FILE_PATH}
     password:
       key-store: ${JKS_STORE_PASS}
       key-pass: ${JKS_KEY_PASS}
